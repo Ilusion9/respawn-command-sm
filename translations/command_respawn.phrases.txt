@@ -1,0 +1,8 @@
+"Phrases"
+{
+	"Respawn Delay"
+	{
+		"#format"		"{1:0.1f}"
+		"en"			"You can request respawn again after {1} seconds."
+	}
+}
