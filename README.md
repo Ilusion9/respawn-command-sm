@@ -1,5 +1,5 @@
 # Description
-Respawn command for surf combat servers.
+Respawn command with delay.
 
 # Alliedmods
 https://forums.alliedmods.net/showthread.php?p=2674176#post2674176
