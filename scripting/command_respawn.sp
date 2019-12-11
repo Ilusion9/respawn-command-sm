@@ -7,19 +7,19 @@ public Plugin myinfo =
 {
 	name = "Respawn Command",
 	author = "Ilusion9",
-	description = "Respawn command for surf combat servers",
+	description = "Respawn command with delay",
 	version = "1.0",
 	url = "https://github.com/Ilusion9/"
 };
 
-ConVar g_Cvar_CommandDelayTime;
+ConVar g_Cvar_DelayTime;
 float g_TimeSpawn[MAXPLAYERS + 1];
 float g_TimeDisplayMsg[MAXPLAYERS + 1];
 
 public void OnPluginStart()
 {
 	LoadTranslations("command_respawn.phrases");
-	g_Cvar_CommandDelayTime = CreateConVar("sm_cmd_respawn_delay", "10", "After how many seconds players can use the respawn command again?", 0, true, 0.0);
+	g_Cvar_DelayTime = CreateConVar("sm_cmd_respawn_delay", "10", "After how many seconds players can use the respawn command again?", 0, true, 0.0);
 	
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	RegConsoleCmd("sm_respawn", Command_Respawn);
@@ -45,10 +45,10 @@ public Action Command_Respawn(int client, int args)
 		return Plugin_Handled;
 	}
 	
-	if (g_Cvar_CommandDelayTime.BoolValue)
+	if (g_Cvar_DelayTime.BoolValue)
 	{
 		float gameTime = GetGameTime();
-		float commandDelayTimeLeft = g_TimeSpawn[client] + g_Cvar_CommandDelayTime.FloatValue - gameTime;
+		float commandDelayTimeLeft = g_TimeSpawn[client] + g_Cvar_DelayTime.FloatValue - gameTime;
 		
 		if (commandDelayTimeLeft > 0.0)
 		{
