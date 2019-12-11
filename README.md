@@ -2,12 +2,12 @@
 Respawn command with delay.
 
 # Alliedmods
-https://forums.alliedmods.net/showthread.php?p=2674176#post2674176
+https://forums.alliedmods.net/showthread.php?p=2674176
 
 # Commands
 ```
 sm_respawn
-!respawn or /respawn
+!respawn or /respawn - based on chat triggers
 ```
 # ConVars
 ```
