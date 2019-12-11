@@ -23,12 +23,13 @@ public void OnPluginStart()
 	
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	RegConsoleCmd("sm_respawn", Command_Respawn);
+	
+	AutoExecConfig(true, "command_respawn");
 }
 
 public void Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	
 	if (client)
 	{
 		float gameTime = GetGameTime();
@@ -47,13 +48,13 @@ public Action Command_Respawn(int client, int args)
 	if (g_Cvar_CommandDelayTime.BoolValue)
 	{
 		float gameTime = GetGameTime();
-		float timeLeft = g_TimeSpawn[client] + g_Cvar_CommandDelayTime.FloatValue - gameTime;
+		float commandDelayTimeLeft = g_TimeSpawn[client] + g_Cvar_CommandDelayTime.FloatValue - gameTime;
 		
-		if (timeLeft > 0.0)
+		if (commandDelayTimeLeft > 0.0)
 		{
 			if (gameTime - g_TimeDisplayMsg[client] > 1.0)
 			{
-				PrintToChat(client, "[SM] %t", "Respawn Delay", timeLeft);
+				PrintToChat(client, "[SM] %t", "Respawn Delay", commandDelayTimeLeft);
 				g_TimeDisplayMsg[client] = gameTime;
 			}
 			
@@ -61,11 +62,7 @@ public Action Command_Respawn(int client, int args)
 		}
 	}
 	
-	if (IsPlayerAlive(client))
-	{
-		CS_RespawnPlayer(client);
-	}
-	
+	CS_RespawnPlayer(client);	
 	return Plugin_Handled;
 }
 
