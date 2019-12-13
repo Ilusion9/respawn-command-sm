@@ -48,13 +48,13 @@ public Action Command_Respawn(int client, int args)
 	if (g_Cvar_DelayTime.BoolValue)
 	{
 		float gameTime = GetGameTime();
-		float commandDelayTimeLeft = g_TimeSpawn[client] + g_Cvar_DelayTime.FloatValue - gameTime;
+		float commandDelay = g_TimeSpawn[client] + g_Cvar_DelayTime.FloatValue - gameTime;
 		
-		if (commandDelayTimeLeft > 0.0)
+		if (commandDelay > 0.0)
 		{
 			if (gameTime - g_TimeDisplayMsg[client] > 1.0)
-			{
-				PrintToChat(client, "[SM] %t", "Respawn Delay", commandDelayTimeLeft);
+			{				
+				PrintToChat(client, "%t", "Respawn Delay", commandDelay);
 				g_TimeDisplayMsg[client] = gameTime;
 			}
 			
