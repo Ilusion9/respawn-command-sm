@@ -1,5 +1,6 @@
 #include <sourcemod>
 #include <cstrike>
+#include <colorlib>
 
 #pragma newdecls required
 
