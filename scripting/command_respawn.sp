@@ -60,7 +60,7 @@ public Action Command_Respawn(int client, int args)
 		{
 			if (gameTime - g_TimeDisplayMsg[client] >= g_Cvar_MsgDelayTime.FloatValue)
 			{
-				CPrintToChat(client, "%t", "Respawn Delay", commandDelay < 0.01 ? 0.01 : commandDelay);
+				CPrintToChat(client, "%t", "Respawn Delay", commandDelay < 0.1 ? 0.1 : commandDelay);
 				g_TimeDisplayMsg[client] = gameTime;
 			}
 			
