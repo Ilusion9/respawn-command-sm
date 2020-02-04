@@ -14,6 +14,8 @@ public Plugin myinfo =
 };
 
 ConVar g_Cvar_DelayTime;
+ConVar g_Cvar_MsgDelayTime;
+
 float g_TimeSpawn[MAXPLAYERS + 1];
 float g_TimeDisplayMsg[MAXPLAYERS + 1];
 
@@ -21,7 +23,8 @@ public void OnPluginStart()
 {
 	LoadTranslations("command_respawn.phrases");
 	g_Cvar_DelayTime = CreateConVar("sm_cmd_respawn_delay", "10", "After how many seconds players can use the respawn command again?", 0, true, 0.0);
-	
+	g_Cvar_MsgDelayTime = CreateConVar("sm_cmd_respawn_message_delay", "0.5", "After how many seconds players are notified again about their remaining delay time?", 0, true, 0.0);
+
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	RegConsoleCmd("sm_respawn", Command_Respawn);
 	
@@ -55,9 +58,9 @@ public Action Command_Respawn(int client, int args)
 		
 		if (commandDelay > 0.0)
 		{
-			if (gameTime - g_TimeDisplayMsg[client] >= 1.0)
-			{				
-				CPrintToChat(client, "%t", "Respawn Delay", commandDelay);
+			if (gameTime - g_TimeDisplayMsg[client] >= g_Cvar_MsgDelayTime.FloatValue)
+			{
+				CPrintToChat(client, "%t", "Respawn Delay", commandDelay < 0.01 ? 0.01 : commandDelay);
 				g_TimeDisplayMsg[client] = gameTime;
 			}
 			
