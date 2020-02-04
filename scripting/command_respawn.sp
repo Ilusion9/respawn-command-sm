@@ -23,7 +23,7 @@ public void OnPluginStart()
 {
 	LoadTranslations("command_respawn.phrases");
 	g_Cvar_DelayTime = CreateConVar("sm_cmd_respawn_delay", "10", "After how many seconds players can use the respawn command again?", 0, true, 0.0);
-	g_Cvar_MsgDelayTime = CreateConVar("sm_cmd_respawn_message_delay", "0.5", "After how many seconds players are notified again about their remaining delay time?", 0, true, 0.0);
+	g_Cvar_MsgDelayTime = CreateConVar("sm_cmd_respawn_message_delay", "0.5", "After how many seconds players can be notified again about their remaining delay time?", 0, true, 0.0);
 
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	RegConsoleCmd("sm_respawn", Command_Respawn);
