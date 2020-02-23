@@ -10,6 +10,6 @@
 	"Respawn Delay"
 	{
 		"#format"		"{1:0.1f}"
-		"en"			"You can request respawn again in {orange}{1}{default} seconds."
+		"en"			"You can request respawn again in {green}{1}{default} seconds."
 	}
 }
