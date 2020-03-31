@@ -1,15 +1,8 @@
-// Available colors:
-// 
-// {default}, {darkred}, {purple}, {green}, {lightgreen}, 
-// {lime}, {red}, {grey}, {yellow}, {orange}, {bluegrey},
-// {blue}, {darkblue}, {grey2}, {orchid}, {lightred}
-
-
 "Phrases"
 {
 	"Respawn Delay"
 	{
 		"#format"		"{1:0.1f}"
-		"en"			"You can request respawn again in {lime}{1}{default} seconds."
+		"en"			"You can request respawn again in {$green}{1}{default} seconds."
 	}
 }
