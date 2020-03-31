@@ -1,6 +1,6 @@
 #include <sourcemod>
 #include <cstrike>
-#include <colorlib_sample>
+#include <sourcecolors>
 #pragma newdecls required
 
 public Plugin myinfo =
@@ -22,12 +22,11 @@ public void OnPluginStart()
 {
 	LoadTranslations("command_respawn.phrases");
 	g_Cvar_DelayTime = CreateConVar("sm_cmd_respawn_delay", "10", "After how many seconds players can use the respawn command again?", 0, true, 0.0);
-	g_Cvar_MsgDelayTime = CreateConVar("sm_cmd_respawn_message_delay", "0.5", "After how many seconds players can be notified again about their remaining delay time?", 0, true, 0.0);
-
+	g_Cvar_MsgDelayTime = CreateConVar("sm_cmd_respawn_message_delay", "0.5", "After how many seconds players can be notified again on when to use the respawn command?", 0, true, 0.0);
+	AutoExecConfig(true, "command_respawn");
+	
 	HookEvent("player_spawn", Event_PlayerSpawn);
 	RegConsoleCmd("sm_respawn", Command_Respawn);
-	
-	AutoExecConfig(true, "command_respawn");
 }
 
 public void Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast)
@@ -59,7 +58,8 @@ public Action Command_Respawn(int client, int args)
 		{
 			if (gameTime - g_TimeDisplayMsg[client] >= g_Cvar_MsgDelayTime.FloatValue)
 			{
-				CPrintToChat(client, "%t", "Respawn Delay", commandDelay < 0.1 ? 0.1 : commandDelay);
+				commandDelay = commandDelay < 0.1 ? 0.1 : commandDelay;
+				CPrintToChat(client, "%t", "Respawn Delay", commandDelay);
 				g_TimeDisplayMsg[client] = gameTime;
 			}
 			
@@ -67,7 +67,16 @@ public Action Command_Respawn(int client, int args)
 		}
 	}
 	
+	int health = GetEntProp(client, Prop_Send, "m_iHealth");
+	int armor = GetEntProp(client, Prop_Send, "m_ArmorValue");
+	bool hasHelmet = view_as<bool>(GetEntProp(client, Prop_Send, "m_bHasHelmet"));
+
 	CS_RespawnPlayer(client);
+	
+	SetEntityHealth(client, health);
+	SetEntProp(client, Prop_Send, "m_ArmorValue", armor);
+	SetEntProp(client, Prop_Send, "m_bHasHelmet", hasHelmet);
+	
 	return Plugin_Handled;
 }
 
@@ -82,4 +91,4 @@ public Action OnClientSayCommand(int client, const char[] command, const char[] 
 	}
 	
 	return Plugin_Continue;
-}
+}	
